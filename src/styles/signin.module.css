@@ -1,0 +1,34 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffffc4;
+}
+
+.form_cont {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub {
+  font-size: 0.98rem;
+}
+
+.input_name {
+  border: 1px solid #b9bcbf;
+  text-align: center;
+}
+
+.btn {
+  background-color: var(--btn-bg-color);
+  color: white;
+  padding: 0.5em 2.5em;
+}
+
+.btn:hover {
+  background-color: var(--btn-hover-color);
+  color: white;
+}

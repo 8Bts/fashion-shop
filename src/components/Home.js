@@ -12,8 +12,8 @@ const Home = () => (
           </span>
         </div>
         <div className={home.navright}>
-          <Link className={home.navlink}>SIGN IN</Link>
-          <Link className={home.navlink}>CREATE ACCOUNT</Link>
+          <Link to="/signin" className={home.navlink}>SIGN IN</Link>
+          <Link to="/signup" className={home.navlink}>CREATE ACCOUNT</Link>
         </div>
       </div>
     </nav>
@@ -21,7 +21,7 @@ const Home = () => (
       <div className={home.header}>
         <h1>Find your favourite clothing in no time</h1>
         <p>Get the list of the finest clothes and fashion stuff without time loss.</p>
-        <Link className={home.start}>START FREE</Link>
+        <Link to="/signup" className={home.start}>START FREE</Link>
       </div>
     </header>
   </div>

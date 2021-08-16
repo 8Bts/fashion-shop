@@ -1,0 +1,80 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  padding: 3em 1em;
+  font-weight: bold;
+  align-items: center;
+  font-size: 0.76rem;
+}
+
+.logo {
+  display: inline-block;
+  width: 100px;
+  margin-left: 1em;
+}
+
+.navright {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.navlink {
+  color: white;
+  text-decoration: none;
+  border-radius: 1.7rem;
+  padding: 0.5em 1em;
+  transition: background-color 100ms;
+}
+
+.navlink:hover {
+  background-color: #000000a8;
+  color: white;
+}
+
+.header {
+  padding-left: 2em;
+  padding-top: 6em;
+  color: white;
+  width: 67%;
+  line-height: 2;
+}
+
+.start {
+  text-decoration: none;
+  font-style: normal;
+  background-color: var(--btn-bg-color);
+  padding: 1em 3em;
+  border-radius: 1.7rem;
+  font-weight: bold;
+  color: white;
+  transition: color 200ms, background-color 200ms;
+}
+
+.start:hover {
+  background-color: var(--btn-hover-color);
+  color: white;
+}
+
+
+
+@media only screen and (min-width: 768px) {
+  .navbar {
+    padding: 3em 5em;
+    font-size: 1rem;
+  }
+
+  .navright {
+    padding-right: 2em;
+  }
+
+  .navright a:nth-child(1) {
+    margin-right: 1em;
+  }
+
+  .header {
+    padding-left: 6em;
+    width: 50%;
+    line-height: 4;
+  }
+}
