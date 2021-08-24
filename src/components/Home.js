@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import home from '../styles/home.module.css';
 import logo from '../assets/logo.png';
 
@@ -8,7 +8,7 @@ const Home = () => (
       <div className={home.navbar}>
         <div>
           <span className={home.logo}>
-            <img className="w-100" src={logo} alt="logo"></img>
+            <img className="w-100" src={logo} alt="logo" />
           </span>
         </div>
         <div className={home.navright}>

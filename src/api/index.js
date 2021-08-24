@@ -1,11 +1,11 @@
-import category from "./category";
-import item from "./item";
-import user from "./user";
+import categories from './category';
+import items from './item';
+import users from './user';
 
 const API = (() => ({
-  category,
-  item,
-  user,
+  categories,
+  items,
+  users,
 }))();
 
 export default API;

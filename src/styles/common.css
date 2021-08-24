@@ -2,3 +2,16 @@
   --btn-bg-color: #DAA520;
   --btn-hover-color: #000000d4;
 }
+
+.main {
+  min-height: 100vh;
+}
+
+.bg-home {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.568) 0%, rgba(0, 0, 0, 0) 98.35%), 
+                url('../assets/fashion-bg.jpg') top left / cover no-repeat;
+}
+
+.bg-dashboard {
+  background-color: #f7f5fa;
+}

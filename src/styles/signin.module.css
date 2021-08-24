@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   background-color: #ffffffc4;
+  padding: 0 1.6em;
 }
 
 .form_cont {
@@ -15,6 +16,7 @@
 
 .sub {
   font-size: 0.98rem;
+  text-align: center;
 }
 
 .input_name {
@@ -31,4 +33,14 @@
 .btn:hover {
   background-color: var(--btn-hover-color);
   color: white;
+}
+
+.translink {
+  text-decoration: none;
+  color: #777474;
+}
+
+.translink:hover {
+  text-decoration: underline;
+  color: inherit;
 }

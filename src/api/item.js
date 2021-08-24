@@ -12,12 +12,12 @@ const item = (() => {
   };
 
   const create = async (title, price, img) => {
-    const response = await fetch(`${URL}/items?title=${title}&price=${price}&img=${img}`, { method: 'POST' });
+    const response = await fetch(`${URL}/items?title=${title}&price=${price}&image=${img}`, { method: 'POST' });
     return response.json();
   };
 
   const update = async (id, title, price, img) => {
-    const response = await fetch(`${URL}/items/${id}?title=${title}&price=${price}&img=${img}`, { method: 'PUT' });
+    const response = await fetch(`${URL}/items/${id}?title=${title}&price=${price}&image=${img}`, { method: 'PUT' });
     return response.json();
   };
 
@@ -26,7 +26,9 @@ const item = (() => {
     return response.json();
   };
 
-  return { all, get, create, update, drop };
+  return {
+    all, get, create, update, drop,
+  };
 })();
 
 export default item;

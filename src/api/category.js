@@ -26,7 +26,9 @@ const category = (() => {
     return response.json();
   };
 
-  return { all, get, create, update, drop };
+  return {
+    all, get, create, update, drop,
+  };
 })();
 
 export default category;
