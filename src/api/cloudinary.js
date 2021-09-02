@@ -1,6 +1,6 @@
 const cloudinary = (() => {
   const API_KEY = '537585132569355';
-  const URL = 'https://api.cloudinary.com/v1_1/strawberry-cloud/image/upload';
+  const URL = 'https://api.cloudinary.com/v1_1/strawberry-cloud';
   const API_SECRET = 'N7ul2WmfS_KcCQStElL6OdJ-5Vc';
 
   async function digest(str) {
@@ -13,7 +13,7 @@ const cloudinary = (() => {
 
   const upload = async (image) => {
     const timestamp = Date.now();
-    const stringToSign = `eager=c_pad,h_300,w_400|c_crop,h_200,w_260&folder=fashion-shop&timestamp=${timestamp}${API_SECRET}`;
+    const stringToSign = `folder=fashion-shop&return_delete_token=true&timestamp=${timestamp}${API_SECRET}`;
     const signature = await digest(stringToSign);
     const formData = new FormData();
 
@@ -21,10 +21,10 @@ const cloudinary = (() => {
     formData.append('api_key', API_KEY);
     formData.append('timestamp', timestamp);
     formData.append('signature', signature);
-    formData.append('eager', 'c_pad,h_300,w_400|c_crop,h_200,w_260');
     formData.append('folder', 'fashion-shop');
+    formData.append('return_delete_token', 'true');
 
-    const response = await fetch(URL, {
+    const response = await fetch(`${URL}/image/upload`, {
       method: 'POST',
       body: formData,
     });
@@ -32,7 +32,12 @@ const cloudinary = (() => {
     return response.json();
   };
 
-  return { upload };
+  const destroy = async (deleteToken) => {
+    const response = await fetch(`${URL}/delete_by_token?token=${deleteToken}`, { method: 'POST' });
+    return response;
+  };
+
+  return { upload, destroy };
 })();
 
 export default cloudinary;
