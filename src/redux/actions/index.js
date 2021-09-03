@@ -1,5 +1,14 @@
 import API from '../../api/index';
 
+export const logUser = (user) => {
+  window.localStorage.setItem('currentUser', JSON.stringify(user));
+
+  return {
+    type: 'USER_LOGGED_IN',
+    user,
+  };
+};
+
 export const fetchAllItems = () => ({
   type: 'FETCH_ALL_ITEMS',
   payload: API.items.all(),
@@ -8,6 +17,11 @@ export const fetchAllItems = () => ({
 export const fetchItem = (id) => ({
   type: 'FETCH_ITEM',
   payload: API.items.get(id),
+});
+
+export const setItems = (items) => ({
+  type: 'SET_ITEMS',
+  payload: items,
 });
 
 export const fetchAllCategories = () => ({
