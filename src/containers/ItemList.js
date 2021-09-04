@@ -8,7 +8,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper/core';
 import Modal from 'bootstrap/js/dist/modal';
 import Toast from 'bootstrap/js/dist/toast';
-import { fetchAllItems, fetchAllCategories, setItems } from '../redux/actions/index';
+import { Link } from 'react-router-dom';
+import {
+  fetchAllItems, fetchAllCategories, setItems, setCategory,
+} from '../redux/actions/index';
 import itemlist from '../styles/itemlist.module.css';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
@@ -23,6 +26,8 @@ const propTypes = {
   fetchAllItems: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
   setItems: PropTypes.func.isRequired,
+  setCategory: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
   currentUser: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -37,18 +42,18 @@ const defaultProps = {
 };
 
 const ItemList = ({
-  items, categories, setItems, fetchAllItems, fetchAllCategories, currentUser,
+  items, categories, setItems, fetchAllItems, fetchAllCategories, currentUser, filter, setCategory,
 }) => {
   const sideBar = document.querySelector(`.${itemlist.sidenav}`);
   const content = document.querySelector(`.${itemlist.content}`);
   const swiper = document.querySelector(`.${itemlist.swiper}`);
 
   const [swiperInstance, setSwiperInstance] = useState();
-  const [modal, initModal] = useState();
+  const [newItemModal, initNewItemModal] = useState();
+  const [newCategoryModal, initNewCategoryModal] = useState();
   const [toast, initToast] = useState();
   const [toastFlash, setToastFlash] = useState();
   const [formFlash, setFormFlash] = useState();
-  const [allItems, setAllItems] = useState();
 
   const adjustBars = () => {
     const img = document.querySelector(`.${itemlist.image}`);
@@ -59,27 +64,28 @@ const ItemList = ({
   };
 
   useEffect(() => {
-    const newItemModal = document.querySelector('#newItemModal');
-    const newCategoryModal = document.querySelector('#newCategoryModal');
+    const newItemModalEl = document.querySelector('#newItemModal');
+    const newCategoryModalEl = document.querySelector('#newCategoryModal');
 
-    newItemModal.addEventListener('hidden.bs.modal', () => {
+    newItemModalEl.addEventListener('hidden.bs.modal', () => {
       document.getElementById('newItemForm').reset();
       document.getElementById('titleInput').classList.remove('is-invalid');
     });
-    newCategoryModal.addEventListener('hidden.bs.modal', () => {
+    newCategoryModalEl.addEventListener('hidden.bs.modal', () => {
       document.getElementById('newCategoryForm').reset();
       document.getElementById('nameInput').classList.remove('is-invalid');
     });
 
-    initModal(new Modal(newItemModal, {
+    initNewItemModal(new Modal(newItemModalEl, {
       keyboard: false,
     }));
-    initModal(new Modal(newCategoryModal, {
+    initNewCategoryModal(new Modal(newCategoryModalEl, {
       keyboard: false,
     }));
     initToast(new Toast(document.querySelector('#toastSuccess'), {
       keyboard: false,
     }));
+
     if (items.length === 0) {
       fetchAllItems();
       fetchAllCategories();
@@ -95,11 +101,14 @@ const ItemList = ({
   useEffect(() => {
     if (items.length === 0 && swiperInstance) swiperInstance.disable();
     if (items.length > 0) {
-      swiperInstance.enable();
       adjustBars();
-      if (!allItems) setAllItems(items);
     }
     if (swiperInstance) {
+      swiperInstance.enable();
+      window.onresize = () => {
+        swiperInstance.update();
+        adjustBars();
+      };
       setTimeout(() => {
         swiperInstance.update();
         adjustBars();
@@ -140,12 +149,13 @@ const ItemList = ({
       const price = document.querySelector('#priceInput').value;
       const category = document.querySelector('#categoryInput').value;
 
-      API.items.create(title, price, res.url, category).then((response) => {
+      API.items.create(title, price, res.url, category, res.delete_token).then((response) => {
         if (response.message) throw response;
-        modal.hide();
+        newItemModal.hide();
         closeMenu();
         setToastFlash('New item successfully was added!');
         fetchAllItems();
+        fetchAllCategories();
       }).catch((error) => {
         API.cloudinary.destroy(res.delete_token);
         document.querySelector('#titleInput').classList.add('is-invalid');
@@ -160,7 +170,7 @@ const ItemList = ({
     const name = document.querySelector('#nameInput').value;
     API.categories.create(name).then((res) => {
       if (res.message) throw res;
-      modal.hide();
+      newCategoryModal.hide();
       setToastFlash('New Category successfully was added!');
       fetchAllCategories();
     }).catch((error) => {
@@ -169,22 +179,23 @@ const ItemList = ({
     });
   };
 
-  const [prevCategoryBtn, setPrevCategoryBtn] = useState();
-
-  const handleFilter = (items, event) => {
-    prevCategoryBtn.style = null;
-    setPrevCategoryBtn(event.target);
+  const handleFilter = (event, items) => {
+    const prevBtn = Array.from(document.getElementsByName(filter))[0];
+    prevBtn.style = null;
+    const btn = event.target;
+    setCategory(btn.innerText);
     closeMenu();
     swiperInstance.allowSlidePrev = true;
     swiperInstance.off('slideNextTransitionStart');
     swiperInstance.slideTo(0, 1, false);
-    setItems(items);
+    if (items) setItems(items);
+    else fetchAllItems();
   };
 
   useEffect(() => {
-    if (prevCategoryBtn) prevCategoryBtn.style.color = 'var(--btn-bg-color)';
-    else setPrevCategoryBtn(document.getElementById('allItemsBtn'));
-  }, [prevCategoryBtn]);
+    const btn = Array.from(document.getElementsByName(filter))[0];
+    btn.style.color = 'var(--btn-bg-color)';
+  }, [filter]);
 
   const handleLogout = () => {
     window.localStorage.removeItem('currentUser');
@@ -202,13 +213,13 @@ const ItemList = ({
           </div>
         ) : ''}
         <div className={itemlist.categories}>
-          <button id="allItemsBtn" className={itemlist.sideButton} style={{ color: 'var(--btn-bg-color)' }} type="button" onClick={(event) => handleFilter(allItems, event)}>All</button>
+          <button id="allItemsBtn" name="All" className={itemlist.sideButton} type="button" onClick={(event) => handleFilter(event)}>All</button>
           { categories.map((c) => (
-            <button key={c.id} onClick={(event) => handleFilter(c.items, event)} className={itemlist.sideButton} type="button">{c.name}</button>
+            <button key={c.id} name={c.name} onClick={(event) => handleFilter(event, c.items)} className={itemlist.sideButton} type="button">{c.name}</button>
           ))}
         </div>
         <div>
-          <button className={itemlist.sideButton} type="button" onClick={(event) => handleFilter(currentUser.favourites, event)}>
+          <button className={itemlist.sideButton} name="Favourites" type="button" onClick={(event) => handleFilter(event, currentUser.favourites)}>
             Favourites
             <FontAwesomeIcon className="ms-2" icon={faStar} color="#daa520" />
           </button>
@@ -246,10 +257,14 @@ const ItemList = ({
               <SwiperSlide key={i.id} className={itemlist.slide}>
                 <div className={itemlist.cardWrapper}>
                   <div className="card w-100">
-                    <div className={itemlist.image} style={{ backgroundImage: `url(${i.image})` }} />
+                    <Link to={`/item/${i.id}`}>
+                      <div className={itemlist.image} style={{ backgroundImage: `url(${i.image})` }} />
+                    </Link>
                     <div className={`card-body ${itemlist.cardBody}`}>
                       <div className={itemlist.cardInfo}>
-                        <h5 className={`${itemlist.cardTitle} card-title`}>{i.title}</h5>
+                        <Link to={`/item/${i.id}`} className={itemlist.itemLink}>
+                          <h5 className={`${itemlist.cardTitle} card-title`}>{i.title}</h5>
+                        </Link>
                         <span className={itemlist.cardPrice}>{`$ ${i.price}`}</span>
                       </div>
                     </div>
@@ -353,6 +368,7 @@ const mapStateToProps = (state) => {
   return {
     items: state.items,
     categories: state.categories,
+    filter: state.filter,
   };
 };
 
@@ -360,6 +376,7 @@ const mapDispatchToProps = {
   fetchAllItems,
   fetchAllCategories,
   setItems,
+  setCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
