@@ -15,8 +15,13 @@ export const fetchAllItems = () => ({
 });
 
 export const fetchItem = (id) => ({
-  type: 'FETCH_ITEM',
+  type: 'FETCH_SINGLE_ITEM',
   payload: API.items.get(id),
+});
+
+export const setSingleItem = (item) => ({
+  type: 'SET_SINGLE_ITEM',
+  payload: item,
 });
 
 export const setItems = (items) => ({
@@ -42,4 +47,9 @@ export const fetchAllUsers = () => ({
 export const fetchUser = (id) => ({
   type: 'FETCH_USER',
   payload: API.categories.get(id),
+});
+
+export const setCategory = (category) => ({
+  type: 'SET_CATEGORY',
+  category,
 });
