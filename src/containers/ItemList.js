@@ -58,13 +58,12 @@ const ItemList = ({
   const [toastFlash, setToastFlash] = useState();
   const [formFlash, setFormFlash] = useState();
   const [loading, setLoading] = useState(true);
+  const [swiperTranslate, setInitTranslate] = useState();
 
-  const adjustBars = () => {
-    const img = document.querySelector(`.${itemlist.image}`);
-    if (!img) return;
+  const adjustBars = (translate) => {
+    console.log(`Bars adjusted for ${translate}px`);
     const bars = document.querySelector(`.${itemlist.top}`);
-    const barsPadLeft = img.getBoundingClientRect().left - bars.getBoundingClientRect().left;
-    bars.style.paddingLeft = `${barsPadLeft + 1}px`;
+    bars.style.paddingLeft = `${translate}px`;
   };
 
   useEffect(() => {
@@ -106,21 +105,24 @@ const ItemList = ({
   useEffect(() => {
     if (items.length === 0 && swiperInstance) swiperInstance.disable();
     if (items.length > 0) {
-      adjustBars();
       setLoading(false);
     }
     if (swiperInstance) {
       swiperInstance.enable();
-      window.onresize = () => {
-        swiperInstance.update();
-        adjustBars();
-      };
       setTimeout(() => {
         swiperInstance.update();
-        adjustBars();
       }, 300);
     }
   }, [items]);
+
+  useEffect(() => {
+    if (swiperInstance) {
+      if (swiperInstance.translate > 0) setInitTranslate(swiperInstance.translate);
+      swiperInstance.update();
+      if (swiperTranslate > 0) adjustBars(swiperTranslate);
+      else adjustBars(swiperInstance.translate);
+    }
+  });
 
   const closeMenu = () => {
     const links = document.querySelectorAll('.card-link');
@@ -260,7 +262,11 @@ const ItemList = ({
             onBeforeInit={(swiper) => {
               setSwiperInstance(swiper);
             }}
-            onAfterInit={(swiper) => swiper.slideTo(cursor, 0, false)}
+            onAfterInit={(swiper) => {
+              adjustBars(swiper.translate);
+              setInitTranslate(swiper.translate);
+              swiper.slideTo(cursor, 0, false);
+            }}
           >
             { items.length === 0 ? (
               <SwiperSlide>

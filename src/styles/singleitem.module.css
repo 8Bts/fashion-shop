@@ -21,7 +21,7 @@
 }
 
 .title {
-  width: 85%;
+  width: 100%;
   text-align: center;
   margin: 0;
 }
@@ -35,7 +35,7 @@
 
 .cardImageBg {
   position: relative;
-  height: 70vh;
+  height: 68vh;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

@@ -24,8 +24,8 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
+  justify-content: space-between;
   position: relative;
-  height: 100%;
   width: 0;
   background-color: transparent;
   overflow-x: hidden;
@@ -62,7 +62,6 @@
 
 .sidenav .username {
   display: inline-block;
-  margin-bottom: 3em;
   font-weight: 700;
 }
 
@@ -71,7 +70,6 @@
   flex-flow: column nowrap;
   align-items: flex-start;
   border-bottom: 1px solid #d9d9d9;
-  margin-bottom: 2em;
   width: 78%;
 }
 
@@ -101,7 +99,6 @@
   justify-content: center;
   align-items: flex-start;
   border-bottom: 1px solid #d9d9d9;
-  margin-bottom: 2em;
   width: 78%;
 }
 
@@ -186,7 +183,7 @@
 }
 
 .image {
-  height: 427px;
+  height: 60vh;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -197,7 +194,7 @@
   z-index: 2;
   width: 100vw !important;
   text-align: center;
-  bottom: 8px !important;
+  bottom: 0 !important;
 }
 
 .modal {

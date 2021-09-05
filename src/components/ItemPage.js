@@ -289,13 +289,13 @@ const ItemPage = ({
           </div>
         ) : (
           <div className={singleItem.loading}>
-            <div className="spinner-grow text-secondary" role="status">
+            <div className="spinner-grow spinner-grow-sm text-secondary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
-            <div className="spinner-grow text-secondary mx-1" role="status">
+            <div className="spinner-grow spinner-grow-sm text-secondary mx-1" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
-            <div className="spinner-grow text-secondary" role="status">
+            <div className="spinner-grow spinner-grow-sm text-secondary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
