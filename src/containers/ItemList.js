@@ -59,9 +59,9 @@ const ItemList = ({
   const [formFlash, setFormFlash] = useState();
   const [loading, setLoading] = useState(true);
   const [swiperTranslate, setInitTranslate] = useState();
+  const [menuIsOpen, setMenuState] = useState();
 
   const adjustBars = (translate) => {
-    console.log(`Bars adjusted for ${translate}px`);
     const bars = document.querySelector(`.${itemlist.top}`);
     bars.style.paddingLeft = `${translate}px`;
   };
@@ -125,6 +125,7 @@ const ItemList = ({
   });
 
   const closeMenu = () => {
+    setMenuState(false);
     const links = document.querySelectorAll('.card-link');
     links.forEach((link) => link.classList.remove(itemlist.cardLink));
 
@@ -133,9 +134,11 @@ const ItemList = ({
     content.style.boxShadow = null;
     content.style.marginTop = null;
     swiper.style.height = null;
+    setTimeout(() => swiperInstance.update(), 300);
   };
 
   const openMenu = () => {
+    setMenuState(true);
     const links = document.querySelectorAll('.card-link');
     links.forEach((link) => link.classList.add(itemlist.cardLink));
 
@@ -246,7 +249,7 @@ const ItemList = ({
       </div>
       <div className={itemlist.content}>
         <div className={itemlist.top}>
-          <FontAwesomeIcon onClick={openMenu} icon={faBars} color="#a1a0a1" />
+          <FontAwesomeIcon onClick={menuIsOpen ? closeMenu : openMenu} icon={faBars} color="#a1a0a1" />
           <span className={itemlist.title}>Items</span>
         </div>
         <div id="">
