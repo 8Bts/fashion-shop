@@ -10,7 +10,7 @@ import Modal from 'bootstrap/js/dist/modal';
 import Toast from 'bootstrap/js/dist/toast';
 import { Link } from 'react-router-dom';
 import {
-  fetchAllItems, fetchAllCategories, setItems, setCategory,
+  fetchAllItems, fetchAllCategories, setItems, setCategory, setCursor,
 } from '../redux/actions/index';
 import itemlist from '../styles/itemlist.module.css';
 import 'swiper/swiper.min.css';
@@ -27,7 +27,9 @@ const propTypes = {
   fetchAllCategories: PropTypes.func.isRequired,
   setItems: PropTypes.func.isRequired,
   setCategory: PropTypes.func.isRequired,
+  setCursor: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
+  cursor: PropTypes.number.isRequired,
   currentUser: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -42,7 +44,8 @@ const defaultProps = {
 };
 
 const ItemList = ({
-  items, categories, setItems, fetchAllItems, fetchAllCategories, currentUser, filter, setCategory,
+  items, categories, currentUser, filter, cursor,
+  setItems, fetchAllItems, fetchAllCategories, setCategory, setCursor,
 }) => {
   const sideBar = document.querySelector(`.${itemlist.sidenav}`);
   const content = document.querySelector(`.${itemlist.content}`);
@@ -66,7 +69,6 @@ const ItemList = ({
   useEffect(() => {
     const newItemModalEl = document.querySelector('#newItemModal');
     const newCategoryModalEl = document.querySelector('#newCategoryModal');
-
     newItemModalEl.addEventListener('hidden.bs.modal', () => {
       document.getElementById('newItemForm').reset();
       document.getElementById('titleInput').classList.remove('is-invalid');
@@ -96,7 +98,7 @@ const ItemList = ({
     if (toastFlash) {
       toast.show();
     }
-  }, [toastFlash, formFlash]);
+  }, [toastFlash]);
 
   useEffect(() => {
     if (items.length === 0 && swiperInstance) swiperInstance.disable();
@@ -117,6 +119,9 @@ const ItemList = ({
   }, [items]);
 
   const closeMenu = () => {
+    const links = document.querySelectorAll('.card-link');
+    links.forEach((link) => link.classList.remove(itemlist.cardLink));
+
     sideBar.style.width = '0';
     sideBar.style.paddingLeft = '0';
     content.style.boxShadow = null;
@@ -125,11 +130,12 @@ const ItemList = ({
   };
 
   const openMenu = () => {
-    swiperInstance.slidePrev(1, false);
+    const links = document.querySelectorAll('.card-link');
+    links.forEach((link) => link.classList.add(itemlist.cardLink));
+
     swiperInstance.allowSlidePrev = false;
-    swiperInstance.once('slideNextTransitionStart', () => {
+    swiperInstance.once('sliderMove', () => {
       swiperInstance.allowSlidePrev = true;
-      swiperInstance.slidePrev(1, false);
       closeMenu();
     });
     sideBar.style.width = '60%';
@@ -149,7 +155,7 @@ const ItemList = ({
       const price = document.querySelector('#priceInput').value;
       const category = document.querySelector('#categoryInput').value;
 
-      API.items.create(title, price, res.url, category, res.delete_token).then((response) => {
+      API.items.create(title, price, res.url, category, res.public_id).then((response) => {
         if (response.message) throw response;
         newItemModal.hide();
         closeMenu();
@@ -186,7 +192,7 @@ const ItemList = ({
     setCategory(btn.innerText);
     closeMenu();
     swiperInstance.allowSlidePrev = true;
-    swiperInstance.off('slideNextTransitionStart');
+    swiperInstance.off('sliderMove');
     swiperInstance.slideTo(0, 1, false);
     if (items) setItems(items);
     else fetchAllItems();
@@ -204,7 +210,10 @@ const ItemList = ({
   return (
     <div className={itemlist.cont}>
       <div className={itemlist.sidenav}>
-        <span className={itemlist.username}>{currentUser.name}</span>
+        <div>
+          <span className={itemlist.avatar}>{currentUser.name[0]}</span>
+          <span className={itemlist.username}>{currentUser.name}</span>
+        </div>
         { currentUser.admin_level > 0 ? (
           <div className={itemlist.adminPanel}>
             <h5 className={itemlist.apLabel}>Admin Panel</h5>
@@ -239,9 +248,13 @@ const ItemList = ({
             spaceBetween={30}
             pagination={{ type: 'fraction', el: `.${itemlist.pagination}` }}
             className={itemlist.swiper}
+            onSlideChange={(swiper) => {
+              setCursor(swiper.activeIndex);
+            }}
             onBeforeInit={(swiper) => {
               setSwiperInstance(swiper);
             }}
+            onAfterInit={(swiper) => swiper.slideTo(cursor, 0, false)}
           >
             { items.length === 0 ? (
               <SwiperSlide>
@@ -257,12 +270,12 @@ const ItemList = ({
               <SwiperSlide key={i.id} className={itemlist.slide}>
                 <div className={itemlist.cardWrapper}>
                   <div className="card w-100">
-                    <Link to={`/item/${i.id}`}>
+                    <Link className="card-link" to={`/item/${i.id}`}>
                       <div className={itemlist.image} style={{ backgroundImage: `url(${i.image})` }} />
                     </Link>
                     <div className={`card-body ${itemlist.cardBody}`}>
                       <div className={itemlist.cardInfo}>
-                        <Link to={`/item/${i.id}`} className={itemlist.itemLink}>
+                        <Link to={`/item/${i.id}`} className={`${itemlist.titleLink} card-link`}>
                           <h5 className={`${itemlist.cardTitle} card-title`}>{i.title}</h5>
                         </Link>
                         <span className={itemlist.cardPrice}>{`$ ${i.price}`}</span>
@@ -369,6 +382,7 @@ const mapStateToProps = (state) => {
     items: state.items,
     categories: state.categories,
     filter: state.filter,
+    cursor: state.cursor,
   };
 };
 
@@ -377,6 +391,7 @@ const mapDispatchToProps = {
   fetchAllCategories,
   setItems,
   setCategory,
+  setCursor,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
