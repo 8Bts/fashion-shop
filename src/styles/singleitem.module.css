@@ -1,0 +1,88 @@
+.cont {
+  background-color: #f7f5fa;
+  min-height: 100vh;
+}
+
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row nowrap;
+}
+
+.top {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 1em;
+  padding-top: 1em;
+  padding-left: 2em;
+}
+
+.title {
+  width: 85%;
+  text-align: center;
+  margin: 0;
+}
+
+.cardLink {
+  pointer-events: none;
+  touch-action: none;
+  cursor: default;
+  text-decoration: none;
+}
+
+.cardImageBg {
+  position: relative;
+  height: 70vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.details {
+  position: absolute;
+  bottom: 1.4em;
+  right: 0;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.4rem;
+}
+
+.aControl {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+.cardBody {
+  padding: 1.3em;
+}
+
+.addButton {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border: none;
+  padding: 1em 0;
+  color: white;
+  font-weight: 600;
+  background-color: var(--btn-bg-color);
+}
+
+.isFavourite {
+  background-color: var(--btn-hover-color);
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  padding: 0.4em;
+  z-index: 2;
+  color: var(--bs-success);
+  background-color: #f7f5fa;
+}

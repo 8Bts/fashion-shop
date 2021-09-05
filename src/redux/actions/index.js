@@ -53,3 +53,8 @@ export const setCategory = (category) => ({
   type: 'SET_CATEGORY',
   category,
 });
+
+export const setCursor = (index) => ({
+  type: 'SET_CURSOR',
+  index,
+});

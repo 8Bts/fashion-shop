@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 :root {
-  --btn-bg-color: #DAA520;
+  --btn-bg-color: #daa520;
   --btn-hover-color: #000000d4;
 }
 
@@ -8,8 +14,9 @@
 }
 
 .bg-home {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.568) 0%, rgba(0, 0, 0, 0) 98.35%), 
-                url('../assets/fashion-bg.jpg') top left / cover no-repeat;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.568) 0%, rgba(0, 0, 0, 0) 98.35%),
+    url('../assets/fashion-bg.jpg') top left / cover no-repeat;
 }
 
 .bg-dashboard {

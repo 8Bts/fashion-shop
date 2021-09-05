@@ -12,7 +12,7 @@ const category = (() => {
   };
 
   const create = async (name) => {
-    const response = await fetch(`${URL}/users?name=${name}`, { method: 'POST' });
+    const response = await fetch(`${URL}/categories?name=${name}`, { method: 'POST', mode: 'cors' });
     return response.json();
   };
 

@@ -57,6 +57,7 @@ const ItemList = ({
   const [toast, initToast] = useState();
   const [toastFlash, setToastFlash] = useState();
   const [formFlash, setFormFlash] = useState();
+  const [loading, setLoading] = useState(true);
 
   const adjustBars = () => {
     const img = document.querySelector(`.${itemlist.image}`);
@@ -89,6 +90,7 @@ const ItemList = ({
     }));
 
     if (items.length === 0) {
+      setTimeout(() => setLoading(false), 20000);
       fetchAllItems();
       fetchAllCategories();
     }
@@ -97,13 +99,15 @@ const ItemList = ({
   useEffect(() => {
     if (toastFlash) {
       toast.show();
+      if (toastFlash === 'New item successfully was added!') swiperInstance.slideTo(items.length);
     }
-  }, [toastFlash]);
+  }, [items, categories]);
 
   useEffect(() => {
     if (items.length === 0 && swiperInstance) swiperInstance.disable();
     if (items.length > 0) {
       adjustBars();
+      setLoading(false);
     }
     if (swiperInstance) {
       swiperInstance.enable();
@@ -172,6 +176,8 @@ const ItemList = ({
 
   const handleCategorySubmit = (event) => {
     event.preventDefault();
+    const spinner = document.getElementById('addSpinner');
+    spinner.classList.remove('d-none');
 
     const name = document.querySelector('#nameInput').value;
     API.categories.create(name).then((res) => {
@@ -182,7 +188,7 @@ const ItemList = ({
     }).catch((error) => {
       document.querySelector('#nameInput').classList.add('is-invalid');
       setFormFlash(error.message);
-    });
+    }).finally(() => spinner.classList.add('d-none'));
   };
 
   const handleFilter = (event, items) => {
@@ -258,12 +264,26 @@ const ItemList = ({
           >
             { items.length === 0 ? (
               <SwiperSlide>
-                <div className={`${itemlist.vw100} h-75 d-flex flex-column align-items-center justify-content-center`}>
-                  <div className="text-center">
-                    <FontAwesomeIcon className="mb-4" onClick={openMenu} icon={faTimesCircle} size="6x" color="#d9d9d98f" />
-                    <h5>No Items yet</h5>
+                {loading ? (
+                  <div className={itemlist.loading}>
+                    <div className="spinner-grow spinner-grow-sm text-secondary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <div className="spinner-grow spinner-grow-sm text-secondary mx-2" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <div className="spinner-grow spinner-grow-sm text-secondary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className={`${itemlist.vw100} h-75 d-flex flex-column align-items-center justify-content-center`}>
+                    <div className="text-center">
+                      <FontAwesomeIcon className="mb-4" onClick={openMenu} icon={faTimesCircle} size="6x" color="#d9d9d98f" />
+                      <h5>No Items yet</h5>
+                    </div>
+                  </div>
+                )}
               </SwiperSlide>
             ) : ''}
             {items.map((i) => (
@@ -350,7 +370,10 @@ const ItemList = ({
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" form="newCategoryForm" className="btn btn-primary">Add</button>
+              <button type="submit" form="newCategoryForm" className="btn btn-primary">
+                <span id="addSpinner" className="d-none spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" />
+                Add
+              </button>
             </div>
           </div>
         </div>

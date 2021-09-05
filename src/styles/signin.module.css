@@ -24,6 +24,11 @@
   text-align: center;
 }
 
+.flash {
+  text-align: center;
+  color: var(--bs-red);
+}
+
 .btn {
   background-color: var(--btn-bg-color);
   color: white;

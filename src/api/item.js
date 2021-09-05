@@ -11,19 +11,19 @@ const item = (() => {
     return response.json();
   };
 
-  const create = async (title, price, img) => {
-    const response = await fetch(`${URL}/items?title=${title}&price=${price}&image=${img}`, { method: 'POST' });
+  const create = async (title, price, img, category, imgPublicId) => {
+    const response = await fetch(`${URL}/items?title=${title}&price=${price}&image=${img}&category=${category}&img_public_id=${imgPublicId}`, { method: 'POST' });
     return response.json();
   };
 
-  const update = async (id, title, price, img) => {
-    const response = await fetch(`${URL}/items/${id}?title=${title}&price=${price}&image=${img}`, { method: 'PUT' });
-    return response.json();
+  const update = async (id, title, price, img, category, imgPublicId) => {
+    const response = await fetch(`${URL}/items/${id}?title=${title}&price=${price}&image=${img}&category=${category}&img_public_id=${imgPublicId}`, { method: 'PUT' });
+    return response;
   };
 
   const drop = async (id) => {
     const response = await fetch(`${URL}/items/${id}`, { method: 'DELETE' });
-    return response.json();
+    return response;
   };
 
   return {

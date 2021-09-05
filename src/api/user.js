@@ -6,6 +6,11 @@ const user = (() => {
     return response.json();
   };
 
+  const find = async (name) => {
+    const response = await fetch(`${URL}/users/find?name=${name}`);
+    return response.json();
+  };
+
   const get = async (id) => {
     const response = await fetch(`${URL}/users/${id}`);
     return response.json();
@@ -21,13 +26,23 @@ const user = (() => {
     return response.json();
   };
 
+  const addFavourite = async (userId, itemId) => {
+    const response = await fetch(`${URL}/users/${userId}/favourites?item_id=${itemId}`, { method: 'POST' });
+    return response;
+  };
+
+  const removeFavourite = async (userId, itemId) => {
+    const response = await fetch(`${URL}/users/${userId}/favourites?item_id=${itemId}`, { method: 'DELETE' });
+    return response;
+  };
+
   const drop = async (id) => {
     const response = await fetch(`${URL}/users/${id}`, { method: 'DELETE' });
     return response.json();
   };
 
   return {
-    all, get, create, update, drop,
+    all, find, get, create, update, addFavourite, removeFavourite, drop,
   };
 })();
 
