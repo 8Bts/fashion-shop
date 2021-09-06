@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Fashion Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  Fashion Shop is a Full-stack web application listing items from the backend server with their details.
+  It has a very simple authentication system and a few functionalities provided in the admin panel (CRUD operations on items). 
+  As a user, you can filter items by category and add them to you your favorites list on the item page.
 
-## Available Scripts
+  This is a mobile web application and not supposed for large screen devices (any viewport width greater than __768px__)
 
-In the project directory, you can run:
+  Design idea belongs to Alexey Savitskiy on [Behance](https://www.behance.net/gallery/37706679/Circle-(Landing-page-Dashboard-Mobile-App))
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Built With
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+- CSS Modules,
+- React.js
+- Redux
+- Swiperjs
+- Bootstrap
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Screenshots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img src="./screenshots/screenshot-1.png" width="24.5%">
+<img src="./screenshots/screenshot-2.png" width="24.5%">
+<img src="./screenshots/screenshot-3.png" width="24.5%">
+<img src="./screenshots/screenshot-4.png" width="24.5%">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Live Demo
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[Heroku](https://fashion-shop-front.herokuapp.com/)
 
-### `yarn eject`
+## Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  If you want to try this application locally, follow the steps below:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  1. Clone the project using `git clone https://github.com/8Bts/fashion-shop.git` command.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  2. run `cd fashion-shop`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  3. run `npm install`.
 
-## Learn More
+  4. run `npm start`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Test
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  To run tests for the application try the `npm test` command and ensure that you are in the project folder before running it. 
 
-### Code Splitting
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+👤 **Rashid Mammadli**
 
-### Analyzing the Bundle Size
+- Github: [8Bts](https://github.com/8Bts)
+- Twitter: [@Rasheed49705929](https://twitter.com/Rasheed49705929)
+- Linkedin: [Rashid Mammadli](https://www.linkedin.com/in/rashidmammadli/)
+- Email: mcmizze@yahoo.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Contributions, issues, and feature requests are welcome!
 
-### Advanced Configuration
+Feel free to check the <a href="https://github.com/8Bts/fashion-shop.git/issues" target="_blank">issues page</a>.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Show your support
 
-### Deployment
+Give a ⭐️ if you like this project!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Acknowledgments
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Microverse - Web Development School](https://www.microverse.org/)
