@@ -1,4 +1,4 @@
-# Fashion Shop
+# <img src="./public/favicon.ico" width="20px"> Fashion Shop
 
   Fashion Shop is a Full-stack web application listing items from the backend server with their details.
   It has a very simple authentication system and a few functionalities provided in the admin panel (CRUD operations on items). 
@@ -9,8 +9,7 @@
   Design idea belongs to Alexey Savitskiy on [Behance](https://www.behance.net/gallery/37706679/Circle-(Landing-page-Dashboard-Mobile-App))
 
 
-## Built With
-
+## Built With 
 
 - CSS Modules,
 - React.js
