@@ -39,16 +39,6 @@ export const fetchCategory = (id) => ({
   payload: API.categories.get(id),
 });
 
-export const fetchAllUsers = () => ({
-  type: 'FETCH_ALL_USERS',
-  payload: API.categories.all(),
-});
-
-export const fetchUser = (id) => ({
-  type: 'FETCH_USER',
-  payload: API.categories.get(id),
-});
-
 export const setCategory = (category) => ({
   type: 'SET_CATEGORY',
   category,

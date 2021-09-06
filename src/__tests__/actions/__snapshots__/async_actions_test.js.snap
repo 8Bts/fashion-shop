@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`async actions creates FETCH_ALL_CATEGORIES_FULFILLED when fetching all categories has been done 1`] = `
+Array [
+  Object {
+    "type": "FETCH_ALL_CATEGORIES_PENDING",
+  },
+  Object {
+    "payload": Array [],
+    "type": "FETCH_ALL_CATEGORIES_FULFILLED",
+  },
+]
+`;
+
+exports[`async actions creates FETCH_ALL_ITEMS when fetching items has been done 1`] = `
+Array [
+  Object {
+    "type": "FETCH_ALL_ITEMS_PENDING",
+  },
+  Object {
+    "payload": Array [],
+    "type": "FETCH_ALL_ITEMS_FULFILLED",
+  },
+]
+`;
+
+exports[`async actions creates FETCH_CATEGORY_FULFILLED when fetching single category has been done 1`] = `
+Array [
+  Object {
+    "type": "FETCH_CATEGORY_PENDING",
+  },
+  Object {
+    "payload": Array [],
+    "type": "FETCH_CATEGORY_FULFILLED",
+  },
+]
+`;
+
+exports[`async actions creates FETCH_SINGLE_ITEM_FULFILLED when fetching single item has been done 1`] = `
+Array [
+  Object {
+    "type": "FETCH_SINGLE_ITEM_PENDING",
+  },
+  Object {
+    "payload": Array [],
+    "type": "FETCH_SINGLE_ITEM_FULFILLED",
+  },
+]
+`;
