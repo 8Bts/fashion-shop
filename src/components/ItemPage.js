@@ -14,6 +14,7 @@ import {
   logUser,
   fetchAllItems,
   fetchAllCategories,
+  setItems,
 } from '../redux/actions/index';
 import API from '../api';
 
@@ -36,6 +37,8 @@ const propTypes = {
   fetchAllItems: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
   setSingleItem: PropTypes.func.isRequired,
+  setItems: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
   logUser: PropTypes.func.isRequired,
   currentUser: PropTypes.shape({
     id: PropTypes.number,
@@ -61,12 +64,13 @@ const defaultProps = {
 const ItemPage = ({
   item,
   match,
-  fetchItem, fetchAllCategories, fetchAllItems, logUser, setSingleItem,
-  currentUser, categories,
+  fetchItem, fetchAllCategories, fetchAllItems, logUser, setSingleItem, setItems,
+  currentUser, categories, filter,
 }) => {
   const history = useHistory();
 
   const [formFlash, setFormFlash] = useState();
+  const [selectValue, setSelectValue] = useState();
   const [toastFlash, setToastFlash] = useState();
   const [editItemModal, initEditItemModal] = useState();
   const [verifyModal, initVerifyModal] = useState();
@@ -92,11 +96,12 @@ const ItemPage = ({
   useEffect(() => {
     if (!item.title) return;
 
+    setSelectValue(item.categories[0].name);
+
     const editItemModalEl = document.querySelector('#editItemModal');
     const verifyModalEl = document.querySelector('#verifyModal');
 
     editItemModalEl.addEventListener('hidden.bs.modal', () => {
-      document.getElementById('editItemForm').reset();
       document.getElementById('titleInput').classList.remove('is-invalid');
     });
 
@@ -145,7 +150,11 @@ const ItemPage = ({
           if (response.message) throw response;
           editItemModal.hide();
           setToastFlash('Item successfully was updated!');
-          fetchAllItems();
+          if (filter === 'All') fetchAllItems();
+          else {
+            const { id } = categories.find((c) => c.name === filter);
+            API.categories.get(id).then((res) => setItems(res.items));
+          }
           fetchAllCategories();
           fetchItem(item.id);
         }).catch((error) => {
@@ -161,7 +170,11 @@ const ItemPage = ({
         if (response.message) throw response;
         editItemModal.hide();
         setToastFlash('Item successfully was updated!');
-        fetchAllItems();
+        if (filter === 'All') fetchAllItems();
+        else {
+          const { id } = categories.find((c) => c.name === filter);
+          API.categories.get(id).then((res) => setItems(res.items));
+        }
         fetchAllCategories();
         fetchItem(item.id);
       }).catch((error) => {
@@ -230,8 +243,8 @@ const ItemPage = ({
                       </label>
                       <label htmlFor="categoryInput" className="d-block mb-3">
                         Category:
-                        <select id="categoryInput" className="form-select mt-2" defaultValue={item.categories[0].name}>
-                          {categories.map((c) => (
+                        <select id="categoryInput" className="form-select mt-2" onChange={(event) => setSelectValue(event.target.value)} value={selectValue}>
+                          {Array.from(categories).map((c) => (
                             <option key={c.id} value={c.name}>
                               {c.name}
                             </option>
@@ -311,11 +324,13 @@ ItemPage.defaultProps = defaultProps;
 const mapStateToProps = (state) => ({
   item: state.singleItem,
   categories: state.categories,
+  filter: state.filter,
 });
 
 const mapDispatchToProps = ({
   fetchItem,
   setSingleItem,
+  setItems,
   logUser,
   fetchAllItems,
   fetchAllCategories,
