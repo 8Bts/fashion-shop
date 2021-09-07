@@ -89,8 +89,10 @@ const ItemList = ({
     }));
 
     if (items.length === 0) {
-      setTimeout(() => setLoading(false), 20000);
-      fetchAllItems();
+      if (filter === 'All') {
+        setTimeout(() => setLoading(false), 20000);
+        fetchAllItems();
+      } else setLoading(false);
       fetchAllCategories();
     }
   }, []);
@@ -108,7 +110,7 @@ const ItemList = ({
       setLoading(false);
     }
     if (swiperInstance) {
-      swiperInstance.enable();
+      if (items.length > 0) swiperInstance.enable();
       setTimeout(() => {
         swiperInstance.update();
       }, 300);
@@ -266,6 +268,7 @@ const ItemList = ({
               setSwiperInstance(swiper);
             }}
             onAfterInit={(swiper) => {
+              if (items.length === 0) swiper.disable();
               adjustBars(swiper.translate);
               setInitTranslate(swiper.translate);
               swiper.slideTo(cursor, 0, false);

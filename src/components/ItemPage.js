@@ -127,6 +127,7 @@ const ItemPage = ({
     }
     API.users.get(currentUser.id).then((res) => {
       logUser(res);
+      if (filter === 'Favourites') setItems(res.favourites);
     }).finally(() => spinner.classList.add('d-none'));
 
     setIfFavourite(!isFavourite);
@@ -171,6 +172,7 @@ const ItemPage = ({
         editItemModal.hide();
         setToastFlash('Item successfully was updated!');
         if (filter === 'All') fetchAllItems();
+        else if (filter === 'Favourites') setItems(currentUser.favourites);
         else {
           const { id } = categories.find((c) => c.name === filter);
           API.categories.get(id).then((res) => setItems(res.items));
