@@ -1,4 +1,4 @@
-# <img src="./public/favicon.ico" width="20px"> Fashion Shop
+# <img src="./public/favicon.ico" width="30px"> Fashion Shop
 
   Fashion Shop is a Full-stack web application listing items from the backend server with their details.
   It has a very simple authentication system and a few functionalities provided in the admin panel (CRUD operations on items). 
@@ -20,10 +20,8 @@
 
 ## Screenshots
 
-<img src="./screenshots/screenshot-1.png" width="24.5%">
-<img src="./screenshots/screenshot-2.png" width="24.5%">
-<img src="./screenshots/screenshot-3.png" width="24.5%">
-<img src="./screenshots/screenshot-4.png" width="24.5%">
+<img src="./screenshots/screenshot-1.png" width="24.5%"><img src="./screenshots/screenshot-2.png" width="24.5%">
+<img src="./screenshots/screenshot-3.png" width="24.5%"><img src="./screenshots/screenshot-4.png" width="24.5%">
 
 ## Live Demo
 
