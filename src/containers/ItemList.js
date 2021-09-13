@@ -222,7 +222,7 @@ const ItemList = ({
   };
   return (
     <div className={itemlist.cont}>
-      <div className={itemlist.sidenav}>
+      <aside className={itemlist.sidenav}>
         <div>
           <span className={itemlist.avatar}>{currentUser.name[0]}</span>
           <span className={itemlist.username}>{currentUser.name}</span>
@@ -248,7 +248,7 @@ const ItemList = ({
           <br />
           <button type="button" className={`${itemlist.sideButton} ${itemlist.logout}`} onClick={handleLogout}>Logout</button>
         </div>
-      </div>
+      </aside>
       <div className={itemlist.content}>
         <div className={itemlist.top}>
           <FontAwesomeIcon onClick={menuIsOpen ? closeMenu : openMenu} icon={faBars} color="#a1a0a1" />

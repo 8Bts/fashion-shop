@@ -3,7 +3,7 @@ import home from '../styles/home.module.css';
 import logo from '../assets/logo.png';
 
 const Home = () => (
-  <div>
+  <main>
     <nav>
       <div className={home.navbar}>
         <div>
@@ -24,7 +24,7 @@ const Home = () => (
         <Link to="/signup" className={home.start}>START FREE</Link>
       </div>
     </header>
-  </div>
+  </main>
 );
 
 export default Home;
