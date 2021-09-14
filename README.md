@@ -7,6 +7,10 @@
   This is a mobile web application and not supposed for large screen devices (any viewport width greater than __768px__)
 
   Design idea belongs to Alexey Savitskiy on [Behance](https://www.behance.net/gallery/37706679/Circle-(Landing-page-Dashboard-Mobile-App))
+  
+## Back-end
+
+Check the [back-end](https://github.com/8Bts/fashion-shop-api) repo to see API endpoints
 
 
 ## Built With 
